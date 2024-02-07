@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>회원 정보 수정</title>
+</head>
+<style>
+  section{
+    margin: 0 auto;
+  }
+</style>
+<body>
+  <section>
+    <div>
+      <h1>회원 정보 수정</h1>
+      <form name="modifyForm" action="/member/modify" method="post">
+
+        <div>
+          <label>아이디</label>
+          <span th:text="${#authentication.principal.getMemberId}"></span>
+        </div>
+
+        <div>
+          <label>비밀번호 변경</label>
+          <input name="passwd" type="password">
+        </div>
+
+        <div>
+          <label>닉네임 변경</label>
+          <input name="nickname" th:value="${#authentication.principal.getNickname}">
+        </div>
+
+        <div>
+          <label>RiotId 변경</label>
+          <input name="riotId" th:value="${#authentication.principal.getRiotId}">
+        </div>
+        <button type="submit"> 회원정보 수정하기 </button>
+        <button type="button" onclick="location.href='/';"> 취소 </button>
+      </form>
+    </div>
+  </section>
+</body>
+</html>

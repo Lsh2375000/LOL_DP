@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+</head>
+<style>
+  section {
+    margin: 0 auto;
+  }
+</style>
+<body>
+  <section>
+    <div>
+      <h1>회원 가입</h1>
+      <form name="registerForm" action="/member/register" method="post">
+
+        <div>
+          <label>아이디 입력</label>
+          <input name="memberId" type="text" placeholder="사용할 아이디">
+        </div>
+
+        <div>
+          <label>비밀번호</label>
+          <input name="passwd" type="password" placeholder="비밀번호">
+        </div>
+
+        <div>
+          <label>비밀번호 확인</label>
+          <input name="passwd2" type="password" placeholder="비밀번호 확인">
+        </div>
+
+        <div>
+          <label>라이엇 아이디</label>
+          <input name="riotId" type="text" placeholder="Riot 아이디">
+        </div>
+
+        <div>
+          <label>닉네임</label>
+          <input name="nickname" type="text" placeholder="닉네임">
+        </div>
+
+        <div>
+          <label>생년월일</label>
+          <input name="birthday" type="date">
+        </div>
+
+        <button type="submit">회원가입</button>
+
+      </form>
+    </div>
+  </section>
+</body>
+</html>

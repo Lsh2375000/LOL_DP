@@ -1,4 +1,4 @@
-package dp.lol.lol_dp.common.config;
+package dp.lol.lol_dp.config;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;

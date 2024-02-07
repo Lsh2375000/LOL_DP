@@ -2,7 +2,7 @@
 <configuration debug="true">
 	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
-			<Pattern>%d %5p [%c] %m%n</Pattern>
+			<Pattern>%green(%d{yyyy-MM-dd HH:mm:ss.SSS}) %magenta([%thread]) %highlight(%5level) %cyan(%logger) - %m%n</Pattern>
 		</encoder>
 	</appender>
 
@@ -14,9 +14,15 @@
 
 	<logger name="dp.lol.lol_dp" level="DEBUG" appender-ref="console" />
 	<logger name="jdbc.sqlonly" level="INFO" appender-ref="console-infolog" />
-	<logger name="jdbc.resultsettable" level="INFO" appender-ref="console-infolog" />
+	<logger name="jdbc.resultsettable" level="TRACE" appender-ref="console-infolog" />
+	<logger name="jdbc.audit" level="OFF"/>
+	<logger name="jdbc.resultset" level="OFF"/>
+	<logger name="jdbc.connection" level="OFF"/>
+	<logger name="jdbc.sqltiming" level="DEBUG"/>
 
-	<root level="off">
+
+	<root level="INFO">
 		<appender-ref ref="console" />
 	</root>
+
 </configuration>

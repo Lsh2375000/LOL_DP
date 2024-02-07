@@ -19,7 +19,7 @@ spring:
   thymeleaf:
     cache: 'false'
 
-  # JPA ??
+  # JPA
   jpa:
     database: mysql
     dialect: org.hibernate.dialect.MariaDBDialect
@@ -28,8 +28,20 @@ spring:
     open-in-view: 'false'
     hibernate:
       ddl-auto: update
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     properties:
       hibernate:
         format_sql: 'true'
         use_sql_comments: 'true'
         default_batch_fetch_size: '100'
+
+
+logging:
+  level:
+    org:
+      springframework:
+        transaction: DEBUG
+        security: TRACE
+
