@@ -44,7 +44,7 @@ public class MemberController {
     }
 
     @GetMapping("/modify")
-    public void modifyGET(@AuthenticationPrincipal MemberDTO memberDTO) {
+    public void modifyGET(@AuthenticationPrincipal MemberDTO memberDTO, HttpSession session) {
         log.info("MemberController modifyGET()....");
         log.info("로그인한 아이디 : " + memberDTO.getMemberId());
         if (memberDTO == null) {
@@ -62,13 +62,11 @@ public class MemberController {
                 && !memberDTO.getPasswd().equals("")) {
             // 입력한 비밀번호가 변경되고 빈값이 아닐때
             memberService.modifyMemberInfo(memberDTO);
-            return "redirect:/member/login?"+"logout";
         }
-
         // 비밀번호는 그대로고 닉네임과 라이엇 아이디만 변경됐을때
-        memberDTO.setPasswd(memberDTO.getPasswd());
+        memberDTO.setPasswd(securityMemberDTO.getPasswd());
         memberService.modifyMemberInfo(memberDTO);
-        return "redirect:/";
+        return "redirect:/member/login?logout";
 
     }
 

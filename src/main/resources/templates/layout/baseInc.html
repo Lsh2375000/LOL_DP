@@ -1,10 +1,81 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <link th:href="@{/css/font.css}" rel="stylesheet">
 </head>
+<style>
+    body {
+        margin: 0;
+    }
+    nav {
+        border-bottom: 1px solid black;
+        background-color: darkblue;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+    }
+    .logoDiv {
+        width: 200px;
+        height: 60px;
+        text-align: center;
+        font-family: 'neurimboGothicRegular';
+    }
+    .logoLink {
+        font-size: 50px;
+        text-decoration: none;
+        color: white;
+    }
+    .navUl {
+        margin: 0;
+        padding: 10px 10px;
+        font-family: 'WarhavenB';
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .navList {
+        text-align: center;
+        list-style: none;
+        width: 150px;
+    }
+    .navLink { /*네비바 링크*/
+        text-decoration: none;
+        color: white;
+        font-size: 20pt;
+    }
+</style>
 <body>
+<th:block layout:fragment="style">
 
+</th:block>
+<header>
+    <nav>
+        <div class="logoDiv">
+            <a class="logoLink" href="/">LOL.DP</a>
+        </div>
+        <ul class="navUl">
+            <li class="navList"><a class="navLink" href="/">홈</a></li>
+            <li class="navList"><a class="navLink" href="">소환사 검색</a></li>
+            <li th:if="${#authentication.principal == 'anonymousUser'}" class="navList"><a class="navLink" href="/member/login">로그인</a></li>
+            <th:block th:unless="${#authentication.principal == 'anonymousUser'}">
+                <li class="navList"><a class="navLink" href="/logout">로그아웃</a></li>
+                <li class="navList"><a class="navLink" href="member/modify">마이페이지</a></li>
+            </th:block>
+        </ul>
+        <div class="logoDiv">
+
+        </div>
+    </nav><!--네비 바 END-->
+</header>
+
+<div layout:fragment="content">
+
+</div>
 </body>
 </html>

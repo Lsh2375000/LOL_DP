@@ -1,10 +1,44 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>LOL_DP</title>
-</head>
-<body>
-
-</body>
-</html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/baseInc.html}">
+    <title>LOL.DP</title>
+<style layout:fragment="style">
+    table,th,tr,td {
+        border: 1px solid black;
+        background-color: #d5d5d5;
+        color: black;
+    }
+</style>
+<div layout:fragment="content">
+    <section>
+        <div>
+            <h1>회원 정보</h1>
+            <th:block th:if="${#authentication.principal != 'anonymousUser'}">
+                <table id="memberData">
+                    <th>회원 정보 목록</th><!--첫 컬럼-->
+                    <th>회원 정보</th><!--첫 컬럼-->
+                    <tr>
+                        <td>회원아이디</td>
+                        <td th:text="${#authentication.principal.getMemberId}"></td>
+                    </tr>
+                    <tr>
+                        <td>라이엇 아이디</td>
+                        <td th:text="${#authentication.principal.getRiotId}"></td>
+                    </tr>
+                    <tr>
+                        <td>닉네임</td>
+                        <td th:text="${#authentication.principal.getNickname}"></td>
+                    </tr>
+                    <tr>
+                        <td>생년월일</td>
+                        <td th:text="${#authentication.principal.getBirthday}"></td>
+                    </tr>
+                </table>
+            </th:block>
+            <th:block th:unless="${#authentication.principal != 'anonymousUser'}">
+                <span style="color: #ff7fa3; font-size: 15px; border: 1px solid black;">로그인 하세요</span>
+            </th:block>
+        </div>
+    </section>
+</div>

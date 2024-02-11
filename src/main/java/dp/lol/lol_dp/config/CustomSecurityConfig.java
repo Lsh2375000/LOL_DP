@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -77,6 +78,7 @@ public class CustomSecurityConfig {
         // 정적 파일 경로에 시큐리티 적용을 안함.
         return (web -> web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations()));
     }
+
 
     @Bean
     public PersistentTokenRepository persistentTokenRepository() {
