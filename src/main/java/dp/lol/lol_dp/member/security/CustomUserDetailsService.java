@@ -5,6 +5,7 @@ import dp.lol.lol_dp.member.dto.MemberDTO;
 import dp.lol.lol_dp.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -29,7 +30,6 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         Optional<MemberEntity> member = memberRepository.findByMemberId(username);
         // 입력한 회원 아이디에 일치하는 데이터를 DB에서 찾아서 MemberEntity에 넣어준다.
-
         if (member.isEmpty()) {
             throw new UsernameNotFoundException("회원 정보가 존재하지 않습니다.");
         }

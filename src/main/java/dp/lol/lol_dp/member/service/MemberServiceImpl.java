@@ -3,8 +3,13 @@ package dp.lol.lol_dp.member.service;
 import dp.lol.lol_dp.member.domain.MemberEntity;
 import dp.lol.lol_dp.member.dto.MemberDTO;
 import dp.lol.lol_dp.member.repository.MemberRepository;
+import dp.lol.lol_dp.member.security.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,6 +22,7 @@ import java.util.Optional;
 public class MemberServiceImpl implements MemberService{
 
     private final MemberRepository memberRepository;
+    private final CustomUserDetailsService customUserDetailsService;
 
     @Override
     public void register(MemberDTO memberDTO) { // 회원 가입
@@ -63,9 +69,18 @@ public class MemberServiceImpl implements MemberService{
             // 변경된 DTO를 다시 Entity로 변환해서 저장
             log.info("수정된 회원 정보 : " + modifyMember);
             memberRepository.save(modifyMember);
+            sessionUpdate(modifyMemberDTO); // 세션 자동 업데이트
         }
 
     }
 
+    private void sessionUpdate(MemberDTO memberDTO) {
+
+        UserDetails userDetails = customUserDetailsService.loadUserByUsername(memberDTO.getMemberId());
+
+        Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+    }
 
 }

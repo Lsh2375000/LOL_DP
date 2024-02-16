@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
@@ -25,8 +26,17 @@ public class MemberController {
 
     /* ====================== Member CRUD ====================== */
     @GetMapping("/login") // 로그인 GET
-    public void loginGET() {
+    public void loginGET(String error, String logout, HttpSession session) {
         log.info("MemberController loginGET()....");
+        if (logout != null) {
+            log.info(logout);
+            log.info("logout");
+            String message = "로그아웃 되었습니다.";
+            session.setAttribute("logoutMsg", message);
+        }
+        if (error != null) {
+            log.info("로그인 오류");
+        }
     }
 
     @GetMapping("/register") // 회원가입 GET
@@ -62,11 +72,12 @@ public class MemberController {
                 && !memberDTO.getPasswd().equals("")) {
             // 입력한 비밀번호가 변경되고 빈값이 아닐때
             memberService.modifyMemberInfo(memberDTO);
+            return "redirect:/member/login?logout";
         }
         // 비밀번호는 그대로고 닉네임과 라이엇 아이디만 변경됐을때
         memberDTO.setPasswd(securityMemberDTO.getPasswd());
         memberService.modifyMemberInfo(memberDTO);
-        return "redirect:/member/login?logout";
+        return "redirect:/member/modify";
 
     }
 

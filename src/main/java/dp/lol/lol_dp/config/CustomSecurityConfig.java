@@ -1,14 +1,19 @@
 package dp.lol.lol_dp.config;
 
 
+import dp.lol.lol_dp.member.security.CustomAuthenticatorProvider;
 import dp.lol.lol_dp.member.security.CustomUserDetailsService;
+import dp.lol.lol_dp.member.security.handler.MemberAuthFailureHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -17,6 +22,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
@@ -32,6 +38,21 @@ public class CustomSecurityConfig {
 
     private final DataSource dataSource;
     private final CustomUserDetailsService customUserDetailsService;
+    private final CustomAuthenticatorProvider customAuthenticatorProvider;
+
+    @Autowired
+    public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
+        authenticationManagerBuilder.authenticationProvider(customAuthenticatorProvider);
+    }
+
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return web -> web
+                .ignoring()
+                .requestMatchers(PathRequest
+                        .toStaticResources()
+                        .atCommonLocations());
+    }
 
     @Bean
     public SecurityFilterChain userFilterChain(HttpSecurity httpSecurity) throws Exception {
@@ -43,16 +64,15 @@ public class CustomSecurityConfig {
         httpSecurity.formLogin(login -> login
                 .loginPage("/member/login")
                 .defaultSuccessUrl("/")
+                .failureHandler(new MemberAuthFailureHandler())
         ).logout(logoutConfig -> { // 로그아웃 설정
             logoutConfig
-                    .logoutUrl("/logout")
+                    .logoutUrl("/member/logout")
                     .logoutSuccessHandler(
                             ((request, response, authentication) -> {
-                                log.info("로그아웃 성공");
                                 response.setCharacterEncoding(StandardCharsets.UTF_8.name());
                                 response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-                                response.getWriter().println("로그아웃 성공!!");
-                                response.sendRedirect("/");
+                                response.sendRedirect("/member/login?logout");
                             })
                     );
         });
@@ -94,6 +114,11 @@ public class CustomSecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
+    }
 
 
 

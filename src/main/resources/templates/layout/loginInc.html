@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/font.css}" rel="stylesheet">
+</head>
+<style>
+    body {
+        margin: 0 auto;
+    }
+
+    nav {
+        margin-bottom: 150px;
+    }
+
+    #wrap{
+        min-height: calc(100vh - 10rem); /* footer 높이를 빼준다. */
+        margin: 0 auto;
+    }
+    footer{
+        height: 10rem; /* footer 높이 */
+        background: #ededed;
+    }
+</style>
+<body>
+<th:block layout:fragment="style">
+
+</th:block>
+<header>
+    <nav>
+
+    </nav>
+</header>
+
+<div id="wrap" layout:fragment="content">
+
+</div>
+
+<footer>
+    <div class="footerDiv">
+
+    </div>
+</footer>
+<th:block layout:fragment="script">
+
+</th:block>
+</body>
+</html>
