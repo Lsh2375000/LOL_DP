@@ -14,7 +14,7 @@
     }
     nav {
         border-bottom: 1px solid black;
-        background-color: darkblue;
+        background-color: #103ec2;
         height: 80px;
         display: flex;
         align-items: center;
@@ -97,9 +97,10 @@
     const logoutBtn = document.querySelector('#logoutBtn');
 
     logoutBtn.addEventListener('click', function (e) {
-        e.stopPropagation();
-        e.preventDefault();
-        confirm("로그아웃 하시겠습니까?")
+        if (!confirm("로그아웃 하시겠습니까?")) {
+            e.stopPropagation();
+            e.preventDefault();
+        }
 
     });
 </script>

@@ -6,6 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <link th:href="@{/css/font.css}" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/4a227d87f0.js" crossorigin="anonymous"></script>
 </head>
 <style>
     body {
@@ -13,7 +14,7 @@
     }
 
     nav {
-        margin-bottom: 150px;
+        margin-bottom: 200px;
     }
 
     #wrap{
@@ -24,6 +25,20 @@
         height: 10rem; /* footer 높이 */
         background: #ededed;
     }
+
+    .logoDiv {
+        width: 200px;
+        height: 60px;
+        text-align: center;
+        font-family: 'neurimboGothicRegular';
+        margin-top: 20px;
+        margin-left: 30px;
+    }
+    .logoLink {
+        font-size: 50px;
+        text-decoration: none;
+        color: black;
+    }
 </style>
 <body>
 <th:block layout:fragment="style">
@@ -31,7 +46,9 @@
 </th:block>
 <header>
     <nav>
-
+        <div class="logoDiv">
+            <a class="logoLink" href="/">LOL.DP</a>
+        </div>
     </nav>
 </header>
 

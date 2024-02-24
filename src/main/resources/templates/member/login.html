@@ -1,77 +1,186 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/loginInc.html}">
+
     <title>로그인</title>
 <style layout:fragment="style">
-    h1 {
-        text-align: center;
+
+    body {
+        font-family: GmarketSansMedium;
     }
 
-    .loginDiv {
+    .loginDiv { /* 로그인 박스 */
         width: 300px;
         margin: 0 auto;
     }
 
-    #logoutMsg {
+    #loginTxt { /* 페이지 제목 제일 큰 로그인 텍스트 */
+        text-align: center;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    input[type=text] {
+        margin-bottom: 10px;
+    }
+
+    #logoutMsg { /* 로그아웃 메세지 출력 */
+        margin-top: 10px;
+        margin-left: 5px;
         border: none;
         border-radius: 5px;
-        background-color: #eeeeee;
         height: 30px;
         display: flex;
         align-items: center;
         justify-content: left;
-        color: #599eff;
+        color: #0029ff;
+        background-color: #d7e4fc;
         padding-left: 20px;
+        font-size: 13px;
+    }
+    #errorMsg { /* 에러 메세지 출력 */
+        margin-top: 10px;
+        margin-left: 5px;
+        border: none;
+        border-radius: 5px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: left;
+        color: #ff0000;
+        background-color: #ffe4e8;
+        padding-left: 20px;
+        font-size: 13px;
     }
 
-    .inputGroup {
-        margin-bottom: 30px;
+
+    .loginInput { /*아이디 비밀번호 입력폼*/
+        width: 300px;
+        height: 40px;
+        border: 1px solid #dcdcdc;
+        border-radius: 5px;
     }
 
-    #btnGroup {
+    .btnGroup { /*로그인 버튼 그룹*/
+        margin-top: 10px;
         display: flex;
         align-items: center;
         justify-content: space-between;
+        width: 306px;
     }
+    #loginBtn { /*로그인 버튼*/
+        width: 306px;
+        height: 46px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 15px;
+        font-family: JalnanGothic;
+        background-color: #6d9fff;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        transition-duration: 0.3s;
+    }
+    #loginBtn:hover {
+        transition-duration: 0.3s;
+        background-color: #1c5bf9;
+    }
+
+    .fa-unlock {
+        display: none;
+    }
+
+    #register {
+        text-align: center;
+        font-size: 13px;
+    }
+
+    #registerBtn {
+        text-decoration: none;
+        color: #6d9fff;
+    }
+
+    #social { /* 소셜로그인 영역 */
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+    }
+
+    .line { /* 소셜로그인 구분선 */
+        border-bottom: 1px solid #d1d1d1;
+        width: 90px;
+        margin-bottom: 2px;
+    }
+
+
 </style>
 <div layout:fragment="content">
     <div class="loginDiv">
-        <h1>로그인</h1>
+        <p id="loginTxt">로그인</p>
         <form name="loginForm" action="/member/login" method="post">
-            <th:block th:if="${param.logout != null}">
-                <h5 id="logoutMsg" th:text="${session.logoutMsg}"></h5>
-            </th:block>
-            <th:block th:if="${param.error != null}">
-                <h1 th:text="${session.errorMsg}"></h1>
-            </th:block>
+
             <div class="inputGroup">
-                <label>아이디</label>
-                <input name="username" type="text" placeholder="Id" >
+                <input name="username" type="text" class="loginInput" placeholder="아이디" >
             </div>
 
             <div class="inputGroup">
-                <label>비밀번호</label>
-                <input name="password" type="password" placeholder="Password" >
+                <input name="password" type="password" class="loginInput" placeholder="비밀번호" >
+                <th:block th:if="${param.logout != null}">
+                    <div id="logoutMsg">
+                        <p th:text="${session.logoutMsg}"></p>
+                    </div>
+                </th:block>
+                <th:block th:if="${param.error != null}">
+                    <div id="errorMsg">
+                        <i class="fa-solid fa-info"></i>
+                        <p style="margin-left: 5px" th:text="${session.errorMsg}"></p>
+                    </div>
+                </th:block>
             </div>
-
-            <div id="btnGroup">
+            <div class="btnGroup">
+                <button type="submit" id="loginBtn">
+                    <i class="fa-solid fa-lock"></i>
+                    <i class="fa-solid fa-unlock"></i>
+                    <p style="margin-top: 18px">이메일 로그인</p>
+                    <p></p>
+                </button>
+            </div>
+            <div class="btnGroup">
                 <div>
-                    <label> 자동 로그인 </label>
-                    <input type="checkbox" name="remember-me">
+                    <label style="font-size: 13px" for="persisCheck"> 자동 로그인 </label>
+                    <input style="width: 10px; height: 10px;" id="persisCheck" type="checkbox" name="remember-me">
                 </div>
                 <div>
-                    <button type="submit">
-                        로그인
-                    </button>
-                    <button type="button" onclick="location.href='/member/register';">
-                        회원 가입
-                    </button>
                 </div>
+            </div>
+            <div id="social">
+                <div class="line"></div><div id="socialTxt">소셜로그인</div><div class="line"></div>
+            </div>
+            <div id="register">
+                아직 회원이 아니신가요?&nbsp;<a id="registerBtn" href="/member/register">회원가입</a>
             </div>
         </form> <!--Form End-->
     </div>
 </div>
 <script layout:fragment="script" th:inline="javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+        const loginBtn = document.querySelector('#loginBtn');
+        const lock = document.querySelector('.fa-lock');
+        const unLock = document.querySelector('.fa-unlock');
 
 
+        loginBtn.addEventListener('mouseover', function () {
+            lock.style.display = 'none';
+            unLock.style.display = 'inline';
+        });
+
+        loginBtn.addEventListener('mouseout', function () {
+            lock.style.display = 'inline';
+            unLock.style.display = 'none';
+        });
+
+    });
 </script>
