@@ -17,18 +17,13 @@
       <form name="modifyForm" action="/member/modify" method="post">
 
         <div>
-          <label>아이디</label>
+          <label>이메일</label>
           <span th:text="${#authentication.principal.getMemberId}"></span>
         </div>
 
         <div>
           <label>비밀번호 변경</label>
           <input name="passwd" type="password">
-        </div>
-
-        <div>
-          <label>닉네임 변경</label>
-          <input name="nickname" th:value="${#authentication.principal.getNickname}">
         </div>
 
         <div>

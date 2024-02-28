@@ -21,14 +21,11 @@ public class MemberDTO implements UserDetails{
     private String memberId;
     private String passwd;
     private String riotId;
-    private String nickname;
-    private LocalDate birthday;
     private Boolean isDel;
     private String role;
     private List<SimpleGrantedAuthority> authorities;
 
     public MemberDTO(Long memberNo, String memberId, String passwd, String riotId,
-                     String nickname, LocalDate birthday,
                      String role, List<SimpleGrantedAuthority> authorities) {
         // 로그인시 DB에서 회원 정보 가져와서 세션에 값 넣어주기위한 메소드
         log.info("로그인 정보 가져오기");
@@ -36,8 +33,6 @@ public class MemberDTO implements UserDetails{
         this.memberId = memberId;
         this.passwd = passwd;
         this.riotId = riotId;
-        this.nickname = nickname;
-        this.birthday = birthday;
         this.isDel = false;
         this.role = role;
         this.authorities = authorities;
@@ -50,8 +45,6 @@ public class MemberDTO implements UserDetails{
                 .memberId(this.memberId)
                 .passwd(this.passwd)
                 .roitId(this.riotId)
-                .nickname(this.nickname)
-                .birthday(this.birthday)
                 .isDel(false)
                 .role(this.role)
                 .build();

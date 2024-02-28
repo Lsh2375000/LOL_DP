@@ -22,8 +22,6 @@ public class MemberServiceTests {
                 .memberId("lol0002")
                 .passwd("1234")
                 .riotId("testRiot1")
-                .nickname("Park")
-                .birthday(LocalDate.of(2001, 5, 1))
                 .build();
         log.info("회원 입력 정보 : " + memberDTO);
         memberService.register(memberDTO);

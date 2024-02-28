@@ -32,7 +32,7 @@ public class MemberEntity extends BaseEntity {
     private Long memberNo;        // 회원 번호 (PK)
 
     @Column(name = "memberId", nullable = false, unique = true)
-    private String memberId;      // 로그인 ID
+    private String memberId;      // 로그인 이메일
 
     @Column(name = "passwd", nullable = false)
     private String passwd;      // 비밀번호
@@ -40,11 +40,6 @@ public class MemberEntity extends BaseEntity {
     @Column(name = "roitId", nullable = false)
     private String roitId;       // 라이엇 ID
 
-    @Column(name = "nickname", nullable = false)
-    private String nickname;      // 닉네임
-
-    @Column(name = "birthday")
-    private LocalDate birthday;   // 생년월일
 
     @Column(name = "isDel")
     private Boolean isDel;        // 삭제 여부
@@ -64,8 +59,6 @@ public class MemberEntity extends BaseEntity {
         memberDTO.setMemberId(this.memberId);
         memberDTO.setPasswd(this.passwd);
         memberDTO.setRiotId(this.roitId);
-        memberDTO.setNickname(this.nickname);
-        memberDTO.setBirthday(this.birthday);
         memberDTO.setIsDel(this.isDel);
         memberDTO.setRole(this.role);
 

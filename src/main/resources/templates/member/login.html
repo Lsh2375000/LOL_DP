@@ -10,7 +10,7 @@
     }
 
     .loginDiv { /* 로그인 박스 */
-        width: 300px;
+        width: 322px;
         margin: 0 auto;
     }
 
@@ -20,13 +20,12 @@
         font-weight: bold;
     }
 
-    input[type=text] {
+    input[type=text], input[type=email] {
         margin-bottom: 10px;
     }
 
     #logoutMsg { /* 로그아웃 메세지 출력 */
         margin-top: 10px;
-        margin-left: 5px;
         border: none;
         border-radius: 5px;
         height: 30px;
@@ -40,7 +39,6 @@
     }
     #errorMsg { /* 에러 메세지 출력 */
         margin-top: 10px;
-        margin-left: 5px;
         border: none;
         border-radius: 5px;
         height: 30px;
@@ -59,6 +57,7 @@
         height: 40px;
         border: 1px solid #dcdcdc;
         border-radius: 5px;
+        padding: 0 10px;
     }
 
     .btnGroup { /*로그인 버튼 그룹*/
@@ -66,10 +65,10 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        width: 306px;
+        width: 322px;
     }
     #loginBtn { /*로그인 버튼*/
-        width: 306px;
+        width: 322px;
         height: 46px;
         border: none;
         border-radius: 10px;
@@ -123,7 +122,7 @@
         <form name="loginForm" action="/member/login" method="post">
 
             <div class="inputGroup">
-                <input name="username" type="text" class="loginInput" placeholder="아이디" >
+                <input name="username" type="email" class="loginInput" placeholder="이메일 ex) example@gamil.com" >
             </div>
 
             <div class="inputGroup">

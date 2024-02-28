@@ -62,7 +62,6 @@ public class MemberServiceImpl implements MemberService{
                 modifyMemberDTO.setPasswd(passwordEncoder.encode(memberDTO.getPasswd()));
                 // 입력한 비밀번호 암호화
             }
-            modifyMemberDTO.setNickname(memberDTO.getNickname());
             modifyMemberDTO.setRiotId(memberDTO.getRiotId());
 
             MemberEntity modifyMember = modifyMemberDTO.dtoToEntity();
