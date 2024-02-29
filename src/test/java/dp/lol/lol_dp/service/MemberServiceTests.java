@@ -17,14 +17,14 @@ public class MemberServiceTests {
     MemberService memberService;
 
     @Test
-    public void registerTest() {
+    public void signUpTest() {
         MemberDTO memberDTO = MemberDTO.builder()
                 .memberId("lol0002")
                 .passwd("1234")
                 .riotId("testRiot1")
                 .build();
         log.info("회원 입력 정보 : " + memberDTO);
-        memberService.register(memberDTO);
+        memberService.signUp(memberDTO);
     }
 
 

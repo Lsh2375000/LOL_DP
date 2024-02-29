@@ -25,7 +25,7 @@ public class MemberServiceImpl implements MemberService{
     private final CustomUserDetailsService customUserDetailsService;
 
     @Override
-    public void register(MemberDTO memberDTO) { // 회원 가입
+    public void signUp(MemberDTO memberDTO) { // 회원 가입
         log.info("회원가입 서비스 메소드");
         log.info("입력한 회원 정보 : " + memberDTO);
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();

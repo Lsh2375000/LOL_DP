@@ -24,8 +24,6 @@ public class MemberRepositoryTests {
                 .memberId("lol001")
                 .passwd("1234")
                 .roitId("zaqxsw327")
-                .nickname("Kim")
-                .birthday(LocalDate.of(2000, 1, 1))
                 .isDel(false)
                 .build();
         MemberEntity member = memberRepository.save(insertData);

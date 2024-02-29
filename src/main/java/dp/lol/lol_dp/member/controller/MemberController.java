@@ -39,16 +39,16 @@ public class MemberController {
         }
     }
 
-    @GetMapping("/register") // 회원가입 GET
-    public void registerGET() {
-        log.info("MemberController registerGET()....");
+    @GetMapping("/signUp") // 회원가입 GET
+    public void signUpGET() {
+        log.info("MemberController signUpGET()....");
     }
 
-    @PostMapping("/register") // 회원가입 POST
-    public String registerPOST(MemberDTO memberDTO) {
-        log.info("MemberController registerPOST()....");
+    @PostMapping("/signUp") // 회원가입 POST
+    public String signUpPOST(MemberDTO memberDTO) {
+        log.info("MemberController signUpPOST()....");
         log.info("inputMemberDTO : " + memberDTO);
-        memberService.register(memberDTO);
+        memberService.signUp(memberDTO);
 
         return "redirect:/member/login";
     }

@@ -1,0 +1,140 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/loginInc.html}">
+
+<title>회원가입</title>
+<style layout:fragment="style">
+  body {
+    font-family: GmarketSansMedium;
+  }
+  label {
+    margin-bottom: 5px;
+  }
+  nav {
+    margin-bottom: 150px;
+  }
+
+  input {
+    outline: none;
+  }
+
+  #signUpDiv {
+    width: 322px;
+    margin: 0 auto;
+
+  }
+
+  .inputDiv {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+  }
+
+  .txtInput {
+    height: 20px;
+    border-radius: 5px;
+    /*border: 1px solid #ff6363;*/
+    border: 1px solid #dcdcdc;
+    padding: 15px;
+    font-size: 20px;
+  }
+
+  #signUpBtn {
+    width: 322px;
+    height: 46px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 15px;
+    font-family: JalnanGothic;
+    background-color: #6d9fff;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    transition-duration: 0.3s;
+  }
+
+  .fa-door-open {
+    display: none;
+  }
+</style>
+<div layout:fragment="content">
+  <div id="signUpDiv">
+    <h1>회원 가입</h1>
+    <form name="signForm" action="/member/signUp" method="post">
+
+      <div class="inputDiv">
+        <label>이메일</label>
+        <input class="txtInput" name="memberId" type="text" placeholder="ex) exmaple@gmail.com ">
+      </div>
+
+      <div class="inputDiv">
+        <label>비밀번호</label>
+        <input class="txtInput" name="passwd" type="password">
+      </div>
+
+      <div class="inputDiv">
+        <label>비밀번호 확인</label>
+        <input class="txtInput" name="passwd2" type="password">
+      </div>
+
+      <div class="inputDiv">
+        <label>라이엇 아이디</label>
+        <input class="txtInput" name="riotId" type="text">
+      </div>
+
+      <button id="signUpBtn" type="submit">
+        <i class="fa-solid fa-door-open"></i>
+        <i class="fa-solid fa-door-closed"></i>
+        <span style="margin-top: 2px">회원가입</span>
+        <span></span>
+      </button>
+    </form>
+  </div>
+</div>
+<script layout:fragment="script" th:inline="javascript">
+  document.addEventListener('DOMContentLoaded', function () {
+
+  const memberId = document.querySelector('[name=memberId]');
+
+    memberId.addEventListener('keyup', function (e) {
+      // console.log(memberId.value);
+      if (!isEmail(memberId.value)) {
+        memberId.style.border = '2px solid red';
+      } else {
+        memberId.style.border = '1px solid #dcdcdc';
+      }
+
+    });
+
+
+
+
+
+
+
+
+
+    const signUpBtn = document.querySelector('#signUpBtn');
+    const open = document.querySelector('.fa-door-open');
+    const closed = document.querySelector('.fa-door-closed');
+
+    signUpBtn.addEventListener('mouseover', function () {
+      closed.style.display = 'none';
+      open.style.display = 'inline';
+    });
+
+    signUpBtn.addEventListener('mouseout', function () {
+      closed.style.display = 'inline';
+      open.style.display = 'none';
+    });
+
+
+
+
+
+
+
+  });
+</script>

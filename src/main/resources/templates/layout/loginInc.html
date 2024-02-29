@@ -7,6 +7,7 @@
     <meta charset="UTF-8">
     <link th:href="@{/css/font.css}" rel="stylesheet">
     <script src="https://kit.fontawesome.com/4a227d87f0.js" crossorigin="anonymous"></script>
+    <script th:src="@{/js/isCheck.js}"></script>
 </head>
 <style>
     body {
@@ -20,10 +21,6 @@
     #wrap{
         min-height: calc(100vh - 10rem); /* footer 높이를 빼준다. */
         margin: 0 auto;
-    }
-    footer{
-        height: 10rem; /* footer 높이 */
-        background: #ededed;
     }
 
     .logoDiv {
@@ -56,11 +53,6 @@
 
 </div>
 
-<footer>
-    <div class="footerDiv">
-
-    </div>
-</footer>
 <th:block layout:fragment="script">
 
 </th:block>
