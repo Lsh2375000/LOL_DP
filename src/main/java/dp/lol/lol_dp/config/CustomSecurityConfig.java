@@ -3,6 +3,7 @@ package dp.lol.lol_dp.config;
 
 import dp.lol.lol_dp.member.security.CustomAuthenticatorProvider;
 import dp.lol.lol_dp.member.security.CustomUserDetailsService;
+import dp.lol.lol_dp.member.security.handler.CustomSocialLoginSuccessHandler;
 import dp.lol.lol_dp.member.security.handler.MemberAuthFailureHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -23,6 +24,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
@@ -88,6 +90,11 @@ public class CustomSecurityConfig {
                 .tokenValiditySeconds(60 * 60 * 24 * 30)// 유효기간 30일
         );
 
+        httpSecurity.oauth2Login(login -> // 소셜 로그인 설정
+                login.loginPage("/member/login").successHandler(authenticationSuccessHandler())
+        );
+
+
         return httpSecurity.build();
     }
 
@@ -118,6 +125,11 @@ public class CustomSecurityConfig {
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
+    }
+
+    @Bean
+    public AuthenticationSuccessHandler authenticationSuccessHandler() {
+        return new CustomSocialLoginSuccessHandler(passwordEncoder());
     }
 
 

@@ -44,10 +44,11 @@ public class CustomUserDetailsService implements UserDetailsService {
                 resultMember.getMemberNo(),
                 resultMember.getMemberId(),
                 resultMember.getPasswd(),
-                resultMember.getRoitId(),
+                resultMember.getSummonerName(),
+                resultMember.getIsDel(),
                 resultMember.getRole(),
-                authorities
-                );
+                resultMember.getSocial(),
+                authorities);
 
         log.info("세션에 저장될 회원 정보 : " + memberDTO);
 

@@ -27,8 +27,8 @@
         </div>
 
         <div>
-          <label>RiotId 변경</label>
-          <input name="riotId" th:value="${#authentication.principal.getRiotId}">
+          <label>소환사 닉네임 변경</label>
+          <input name="summonerName" th:value="${#authentication.principal.getSummonerName}">
         </div>
         <button type="submit"> 회원정보 수정하기 </button>
         <button type="button" onclick="location.href='/';"> 취소 </button>

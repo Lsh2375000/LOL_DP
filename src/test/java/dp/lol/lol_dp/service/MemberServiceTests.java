@@ -21,7 +21,7 @@ public class MemberServiceTests {
         MemberDTO memberDTO = MemberDTO.builder()
                 .memberId("lol0002")
                 .passwd("1234")
-                .riotId("testRiot1")
+                .summonerName("testRiot1")
                 .build();
         log.info("회원 입력 정보 : " + memberDTO);
         memberService.signUp(memberDTO);

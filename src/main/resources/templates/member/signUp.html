@@ -1,7 +1,6 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/loginInc.html}">
-
+      layout:decorate="~{layout/signUpInc.html}">
 <title>회원가입</title>
 <style layout:fragment="style">
   body {
@@ -30,14 +29,6 @@
     margin-bottom: 15px;
   }
 
-  .txtInput {
-    height: 20px;
-    border-radius: 5px;
-    /*border: 1px solid #ff6363;*/
-    border: 1px solid #dcdcdc;
-    padding: 15px;
-    font-size: 20px;
-  }
 
   #signUpBtn {
     width: 322px;
@@ -58,38 +49,63 @@
   .fa-door-open {
     display: none;
   }
+
+
+  #confirmKeyBox {
+    display: none;
+  }
+
+
+  #secondInputGroup {
+    display: none;
+  }
+
 </style>
 <div layout:fragment="content">
-  <div id="signUpDiv">
+  <div id="signUpDiv" style="border: 1px solid #c4c4c4; width: 700px; padding: 40px; border-radius: 10px; " >
     <h1>회원 가입</h1>
     <form name="signForm" action="/member/signUp" method="post">
 
       <div class="inputDiv">
         <label>이메일</label>
-        <input class="txtInput" name="memberId" type="text" placeholder="ex) exmaple@gmail.com ">
+        <div class="input-group mb-3">
+          <input type="text" name="memberId" class="form-control" placeholder="이메일 주소" style="margin-right: 10px; ">
+          <button class="btn btn-outline-secondary" type="button" id="sendConfirmKeyBtn" style="padding-top: 10px">이메일인증</button>
+        </div>
+        <span id="exMailMsg"></span>
+        <div id="confirmKeyBox">
+          <label>인증키</label>
+          <div class="input-group mb-3">
+            <input class="form-control" type="text" name="confirmKey" id="confirmKeyInput" style="margin-right: 10px">
+            <button class="btn btn-outline-secondary" type="button" id="isConfirmKeyBtn" style="padding-top: 10px">인증확인</button>
+          </div>
+        </div>
       </div>
 
-      <div class="inputDiv">
-        <label>비밀번호</label>
-        <input class="txtInput" name="passwd" type="password">
+      <div id="secondInputGroup">
+        <div class="inputDiv">
+          <label>비밀번호</label>
+          <input class="txtInput" name="passwd" type="password">
+        </div>
+
+        <div class="inputDiv">
+          <label>비밀번호 확인</label>
+          <input class="txtInput" name="passwd2" type="password">
+        </div>
+
+        <div class="inputDiv">
+          <label>라이엇 아이디</label>
+          <input class="txtInput" name="summonerName" type="text">
+        </div>
+
+        <button id="signUpBtn" type="submit" disabled>
+          <i class="fa-solid fa-door-open"></i>
+          <i class="fa-solid fa-door-closed"></i>
+          <span style="margin-top: 2px">회원가입</span>
+          <span></span>
+        </button>
       </div>
 
-      <div class="inputDiv">
-        <label>비밀번호 확인</label>
-        <input class="txtInput" name="passwd2" type="password">
-      </div>
-
-      <div class="inputDiv">
-        <label>라이엇 아이디</label>
-        <input class="txtInput" name="riotId" type="text">
-      </div>
-
-      <button id="signUpBtn" type="submit">
-        <i class="fa-solid fa-door-open"></i>
-        <i class="fa-solid fa-door-closed"></i>
-        <span style="margin-top: 2px">회원가입</span>
-        <span></span>
-      </button>
     </form>
   </div>
 </div>
@@ -98,15 +114,67 @@
 
   const memberId = document.querySelector('[name=memberId]');
 
+    /* 이메일 입력 */
     memberId.addEventListener('keyup', function (e) {
       // console.log(memberId.value);
       if (!isEmail(memberId.value)) {
-        memberId.style.border = '2px solid red';
+        memberId.style.border = '2px solid #ff8383';
       } else {
         memberId.style.border = '1px solid #dcdcdc';
       }
 
     });
+
+    const sendConfirmKeyBtn = document.querySelector('#sendConfirmKeyBtn');
+    const exMailMsg = document.querySelector('#exMailMsg');
+    const confirmKeyInput = document.querySelector('#confirmKeyInput');
+    const confirmKeyBox = document.querySelector('#confirmKeyBox');
+    const isConfirmKeyBtn = document.querySelector('#isConfirmKeyBtn');
+
+    /* 중복인증 및 이메일 인증 */
+    sendConfirmKeyBtn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      e.preventDefault();
+
+      if (memberId.value === ''.trim() || !isEmail(memberId.value)) { // 이메일 칸이 비어 있지 않거나 이메일형식에 맞다면 중복검사 실행
+        alert('이메일을 다시 확인해 주세요.');
+        e.stopPropagation();
+        e.preventDefault();
+
+      } else {
+        exEmail(memberId.value).then(request => {
+          // console.log(request);
+          if (request === false) {
+            exMailMsg.innerText = '이미 등록된 이메일 입니다.';
+            exMailMsg.style.color = 'red';
+          } else {
+            exMailMsg.innerText = '사용 가능한 이메일 입니다. 인증키가 전송 되었습니다.';
+            exMailMsg.style.color = 'blue';
+            confirmKeyBox.style.display = 'inline';
+            sendConfirmMail(memberId.value);
+          }
+
+        });
+      }
+
+      isConfirmKeyBtn.addEventListener('click', function (e) {
+
+        if (!matchConfirmKey(confirmKeyInput.value)) {
+          alert('인증키를 다시 확인해 주세요.');
+          e.preventDefault();
+          e.stopPropagation();
+        } else {
+          alert('인증되었습니다.');
+        }
+
+
+      });
+
+
+    });
+
+
+
 
 
 

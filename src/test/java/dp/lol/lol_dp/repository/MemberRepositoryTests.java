@@ -23,7 +23,7 @@ public class MemberRepositoryTests {
         MemberEntity insertData = MemberEntity.builder()
                 .memberId("lol001")
                 .passwd("1234")
-                .roitId("zaqxsw327")
+                .summonerName("zaqxsw327")
                 .isDel(false)
                 .build();
         MemberEntity member = memberRepository.save(insertData);

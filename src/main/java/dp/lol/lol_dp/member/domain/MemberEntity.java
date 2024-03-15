@@ -37,15 +37,17 @@ public class MemberEntity extends BaseEntity {
     @Column(name = "passwd", nullable = false)
     private String passwd;      // 비밀번호
 
-    @Column(name = "roitId", nullable = false)
-    private String roitId;       // 라이엇 ID
-
+    @Column(name = "summonerName", nullable = false)
+    private String summonerName;  // 소환사 닉네임
 
     @Column(name = "isDel")
     private Boolean isDel;        // 삭제 여부
 
     @Column(name = "role",columnDefinition = "VARCHAR(50) default 'USER'")
     private String role; // 회원 유형  (기본으로 USER로 지정)
+
+    @Column(name = "social", nullable = false)
+    private Boolean social;     // 소셜 로그인 여부
 
     @Override
     public void prePersist() {
@@ -58,9 +60,10 @@ public class MemberEntity extends BaseEntity {
         memberDTO.setMemberNo(this.memberNo);
         memberDTO.setMemberId(this.memberId);
         memberDTO.setPasswd(this.passwd);
-        memberDTO.setRiotId(this.roitId);
+        memberDTO.setSummonerName(this.summonerName);
         memberDTO.setIsDel(this.isDel);
         memberDTO.setRole(this.role);
+        memberDTO.setSocial(this.social);
 
         return memberDTO;
     }

@@ -5,9 +5,11 @@ import lombok.*;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @Data
 @Builder
@@ -15,26 +17,30 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 @Log4j2
-public class MemberDTO implements UserDetails{
+public class MemberDTO implements UserDetails, OAuth2User {
 
     private Long memberNo;
     private String memberId;
     private String passwd;
-    private String riotId;
+    private String summonerName;
     private Boolean isDel;
     private String role;
+    private Boolean social;
+
+    private Map<String, Object> props; //  소셜 로그인 정보
     private List<SimpleGrantedAuthority> authorities;
 
-    public MemberDTO(Long memberNo, String memberId, String passwd, String riotId,
-                     String role, List<SimpleGrantedAuthority> authorities) {
+    public MemberDTO(Long memberNo, String memberId, String passwd, String summonerName, Boolean isDel,
+                     String role, Boolean social, List<SimpleGrantedAuthority> authorities) {
         // 로그인시 DB에서 회원 정보 가져와서 세션에 값 넣어주기위한 메소드
         log.info("로그인 정보 가져오기");
         this.memberNo = memberNo;
         this.memberId = memberId;
         this.passwd = passwd;
-        this.riotId = riotId;
-        this.isDel = false;
+        this.summonerName = summonerName;
+        this.isDel = isDel;
         this.role = role;
+        this.social = social;
         this.authorities = authorities;
     }
 
@@ -44,9 +50,10 @@ public class MemberDTO implements UserDetails{
                 .memberNo(this.memberNo)
                 .memberId(this.memberId)
                 .passwd(this.passwd)
-                .roitId(this.riotId)
+                .summonerName(this.summonerName)
                 .isDel(false)
                 .role(this.role)
+                .social(this.social)
                 .build();
         return member;
     }
@@ -84,4 +91,13 @@ public class MemberDTO implements UserDetails{
     }
 
 
+    @Override
+    public Map<String, Object> getAttributes() {
+        return this.getProps();
+    }
+
+    @Override
+    public String getName() {
+        return this.memberId;
+    }
 }

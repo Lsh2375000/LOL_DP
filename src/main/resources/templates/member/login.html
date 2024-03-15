@@ -1,16 +1,22 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/loginInc.html}">
-
-    <title>로그인</title>
+<title>로그인</title>
 <style layout:fragment="style">
+
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
     body {
         font-family: GmarketSansMedium;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-use-select: none;
+        user-select: none;
     }
 
+
     .loginDiv { /* 로그인 박스 */
-        width: 322px;
+        width: 344px;
         margin: 0 auto;
     }
 
@@ -53,7 +59,7 @@
     }
 
     .loginInput { /*아이디 비밀번호 입력폼*/
-        width: 300px;
+        width: 322px;
         height: 40px;
         border: 1px solid #dcdcdc;
         border-radius: 5px;
@@ -92,6 +98,7 @@
     }
 
     #signUp {
+        margin-top: 40px;
         text-align: center;
         font-size: 13px;
     }
@@ -102,7 +109,8 @@
     }
 
     #social { /* 소셜로그인 영역 */
-        height: 50px;
+        margin-top: 30px;
+        height: 20px;
         display: flex;
         align-items: center;
         justify-content: space-around;
@@ -114,6 +122,88 @@
         margin-bottom: 2px;
     }
 
+    .kakao__btn,
+    .google__btn,
+    .naver__btn {
+        display: block;
+        width: 80%;
+        max-width: 630px;
+        margin: 20px auto;
+        height: 50px;
+        cursor: pointer;
+        font-family: "Montserrat", sans-serif;
+        border-radius: 8px;
+        border: none;
+        line-height: 40px;
+    }
+    /*카카오 버튼*/
+    .kakao__btn.kakao__btn,
+    .google__btn.kakao__btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #FEE500;
+        color: #000000;
+        text-decoration: none;
+        box-shadow: 0 15px 30px rgba(37, 40, 45, 0.36);
+        transition: 0.2s linear;
+    }
+    .kakao__btn.kakao__btn .fa,
+    .google__btn.kakao__btn .fa {
+        font-size: 20px;
+        padding: 0 5px 0 0;
+    }
+    .kakao__btn.kakao__btn:hover,
+    .google__btn.kakao__btn:hover {
+        box-shadow: 0 0 0 rgba(91, 144, 240, 0);
+    }
+
+    /*구글 버튼*/
+    .kakao__btn.google__btn,
+    .google__btn.google__btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-decoration: none;
+        background: #f0f0f1;
+        font-family: "Roboto", sans-serif;
+        color: #000000;
+        box-shadow: 0 15px 30px rgba(37, 40, 45, 0.36);
+        transition: 0.2s linear;
+    }
+    .kakao__btn.google__btn .fa,
+    .google__btn.google__btn .fa {
+        font-size: 20px;
+        padding: 0 5px 0 0;
+    }
+    .kakao__btn.google__btn:hover,
+    .google__btn.google__btn:hover{
+        box-shadow: 0 0 0 rgba(37, 40, 45, 0);
+    }
+
+    /*네이버 버튼*/
+    .naver__btn.naver__btn,
+    .google__btn.naver__btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #03c75a;
+        color: #ffffff;
+        font-weight: bold;
+        text-decoration: none;
+        box-shadow: 0 15px 30px rgba(37, 40, 45, 0.36);
+        transition: 0.2s linear;
+    }
+    .naver__btn.naver__btn .fa,
+    .google__btn.naver__btn .fa {
+        font-size: 20px;
+        padding: 0 5px 0 0;
+    }
+    .naver__btn.naver__btn:hover,
+    .google__btn.naver__btn:hover {
+        box-shadow: 0 0 0 rgba(91, 144, 240, 0);
+    }
+
 
 </style>
 <div layout:fragment="content">
@@ -122,7 +212,7 @@
         <form name="loginForm" action="/member/login" method="post">
 
             <div class="inputGroup">
-                <input name="username" type="email" class="loginInput" placeholder="이메일 ex) example@gamil.com" >
+                <input name="username" type="email" class="loginInput" placeholder="이메일" >
             </div>
 
             <div class="inputGroup">
@@ -139,8 +229,8 @@
                     </div>
                 </th:block>
             </div>
-            <div class="btnGroup">
-                <button type="submit" id="loginBtn">
+            <div class="btnGroup" style="justify-content: center; width: 344px;">
+                <button type="submit" id="loginBtn" style="width: 344px;">
                     <i class="fa-solid fa-lock"></i>
                     <i class="fa-solid fa-unlock"></i>
                     <span style="margin-top: 4px">이메일 로그인</span>
@@ -158,6 +248,18 @@
             <div id="social">
                 <div class="line"></div><div id="socialTxt">소셜로그인</div><div class="line"></div>
             </div>
+            <a href="/oauth2/authorization/kakao" class="kakao__btn">
+                <i class="fa fa-comment fa-lg" style="margin-right: 10px;"></i>
+                Login with Kakao
+            </a>
+            <a href="/oauth2/authorization/google" class="google__btn">
+                <img src="/img/web_neutral_rd_na.svg">
+                Sign in with Google
+            </a>
+            <a href="/oauth2/authorization/naver" class="naver__btn">
+                <img src="/img/btnG_아이콘원형.png" style="width: 40px; height: 40px;">
+                네이버 로그인
+            </a>
             <div id="signUp">
                 아직 회원이 아니신가요?&nbsp;<a id="signUpBtn" href="/member/signUp">회원가입</a>
             </div>
