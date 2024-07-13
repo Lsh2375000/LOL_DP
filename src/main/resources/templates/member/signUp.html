@@ -4,7 +4,7 @@
 <title>회원가입</title>
 <style layout:fragment="style">
   body {
-    font-family: GmarketSansMedium;
+    font-family: Dovemayo_gothic;
   }
   label {
     margin-bottom: 5px;
@@ -29,6 +29,20 @@
     margin-bottom: 15px;
   }
 
+  #editDiv {
+    display: flex;
+    justify-content: right;
+  }
+  #editBtn {
+    border: none;
+    background-color: white;
+  }
+
+  #signUpBtnDiv {
+    margin-top: 100px;
+    display: flex;
+    justify-content: center;
+  }
 
   #signUpBtn {
     width: 322px;
@@ -60,50 +74,74 @@
     display: none;
   }
 
+  #passwdMsg {
+    margin-top: 10px;
+  }
+
+  #passwdMsg2 {
+    margin-top: 10px;
+  }
+
 </style>
 <div layout:fragment="content">
   <div id="signUpDiv" style="border: 1px solid #c4c4c4; width: 700px; padding: 40px; border-radius: 10px; " >
     <h1>회원 가입</h1>
-    <form name="signForm" action="/member/signUp" method="post">
+    <form name="signUpForm" action="/member/signUp" method="post">
 
-      <div class="inputDiv">
+      <div id="firstInputGroup" class="inputDiv">
+
         <label>이메일</label>
         <div class="input-group mb-3">
-          <input type="text" name="memberId" class="form-control" placeholder="이메일 주소" style="margin-right: 10px; ">
-          <button class="btn btn-outline-secondary" type="button" id="sendConfirmKeyBtn" style="padding-top: 10px">이메일인증</button>
+          <input type="text" name="memberId" class="form-control" placeholder="이메일 주소" style="margin-right: 10px;" onkeydown="if(event.keyCode == 13){search();}">
+          <button class="btn btn-outline-secondary" type="button" id="sendConfirmKeyBtn" style="padding-top: 10px; border: 1px solid #dce0e5;">이메일인증</button>
         </div>
-        <span id="exMailMsg"></span>
+        <div>
+          <span id="exMailMsg"></span>
+        </div>
         <div id="confirmKeyBox">
-          <label>인증키</label>
+          <label>인증 코드</label>
           <div class="input-group mb-3">
-            <input class="form-control" type="text" name="confirmKey" id="confirmKeyInput" style="margin-right: 10px">
-            <button class="btn btn-outline-secondary" type="button" id="isConfirmKeyBtn" style="padding-top: 10px">인증확인</button>
+            <input class="form-control" type="text" name="confirmKey" placeholder="인증코드" id="confirmKeyInput" style="margin-right: 10px" onkeydown="if(event.keyCode == 13){search();}">
+            <button class="btn btn-outline-secondary" type="button" id="isConfirmKeyBtn" style="padding-top: 10px; border: 1px solid #dadee4">인증확인</button>
           </div>
         </div>
       </div>
 
       <div id="secondInputGroup">
+        <div id="editDiv">
+          <button id="editBtn" onClick="search()">이메일 수정</button>
+        </div>
         <div class="inputDiv">
           <label>비밀번호</label>
-          <input class="txtInput" name="passwd" type="password">
+          <input class="form-control" name="passwd" type="password" autoComplete="off" placeholder="8자이상 15자미만,영어,숫자,특수문자 조합" onkeydown="if(event.keyCode == 13){search();}">
+          <div id="passwdMsg"></div>
         </div>
 
         <div class="inputDiv">
           <label>비밀번호 확인</label>
-          <input class="txtInput" name="passwd2" type="password">
+          <input class="form-control" name="passwd2" type="password" autoComplete="off" placeholder="비밀번호 재입력" onkeydown="if(event.keyCode == 13){search();}">
+          <div id="passwdMsg2"></div>
         </div>
 
         <div class="inputDiv">
-          <label>라이엇 아이디</label>
-          <input class="txtInput" name="summonerName" type="text">
+          <label>소환사 닉네임</label>
+          <div style="display: flex; align-items: center;">
+            <input class="form-control" style="width: 35%; margin-right: 20px" name="summonerName" type="text" placeholder="소환사 닉네임" onkeydown="if(event.keyCode == 13){search();}">
+            <p style="font-size: 30px; margin: 0">#</p>
+            <input class="form-control" style="width: 30%; margin-right: 10px" name="tagLine" type="text" placeholder="태그 네임" onkeydown="if(event.keyCode == 13){search();}">
+            <button id="sNameSearch" class="btn btn-secondary" type="button">검 색</button>
+          </div>
+          <div id="summonerInfo"></div>
         </div>
 
-        <button id="signUpBtn" type="submit" disabled>
-          <i class="fa-solid fa-door-open"></i>
-          <i class="fa-solid fa-door-closed"></i>
-          <span style="margin-top: 2px">회원가입</span>
-          <span></span>
-        </button>
+        <div id="signUpBtnDiv">
+          <button id="signUpBtn" type="button">
+            <i class="fa-solid fa-door-open"></i>
+            <i class="fa-solid fa-door-closed"></i>
+            <span style="margin-top: 2px">회원가입</span>
+            <span></span>
+          </button>
+        </div>
       </div>
 
     </form>
@@ -125,11 +163,11 @@
 
     });
 
-    const sendConfirmKeyBtn = document.querySelector('#sendConfirmKeyBtn');
-    const exMailMsg = document.querySelector('#exMailMsg');
-    const confirmKeyInput = document.querySelector('#confirmKeyInput');
-    const confirmKeyBox = document.querySelector('#confirmKeyBox');
-    const isConfirmKeyBtn = document.querySelector('#isConfirmKeyBtn');
+    const sendConfirmKeyBtn = document.querySelector('#sendConfirmKeyBtn'); // 인증 코드 전송버튼
+    const exMailMsg = document.querySelector('#exMailMsg'); // 이메일 중복검사 메세지
+    const confirmKeyInput = document.querySelector('#confirmKeyInput'); // 인증 코드 입력 폼
+    const confirmKeyBox = document.querySelector('#confirmKeyBox'); // 인증 코드 입력 div
+    const isConfirmKeyBtn = document.querySelector('#isConfirmKeyBtn'); // 인증 코드 확인 버튼
 
     /* 중복인증 및 이메일 인증 */
     sendConfirmKeyBtn.addEventListener('click', function (e) {
@@ -148,37 +186,128 @@
             exMailMsg.innerText = '이미 등록된 이메일 입니다.';
             exMailMsg.style.color = 'red';
           } else {
-            exMailMsg.innerText = '사용 가능한 이메일 입니다. 인증키가 전송 되었습니다.';
+            memberId.readOnly = true;
+            exMailMsg.innerText = '사용 가능한 이메일 입니다. 해당 이메일로 인증 코드가 전송 되었습니다.';
             exMailMsg.style.color = 'blue';
             confirmKeyBox.style.display = 'inline';
             sendConfirmMail(memberId.value);
           }
-
         });
       }
+    });
 
-      isConfirmKeyBtn.addEventListener('click', function (e) {
+    const firstInputGroup = document.querySelector('#firstInputGroup'); // 이메일, 인증 코드 입력 폼 div
+    const secondInputGroup = document.querySelector('#secondInputGroup'); // 비밀번호, 소환사 닉네임 입력 폼 div
 
-        if (!matchConfirmKey(confirmKeyInput.value)) {
-          alert('인증키를 다시 확인해 주세요.');
-          e.preventDefault();
-          e.stopPropagation();
-        } else {
-          alert('인증되었습니다.');
-        }
+    /* 인증 코드 확인 */
+    isConfirmKeyBtn.addEventListener('click', function (e) {
 
-
-      });
-
+      if (!matchConfirmKey(confirmKeyInput.value)) {
+        alert('인증키를 다시 확인해 주세요.');
+        e.preventDefault();
+        e.stopPropagation();
+      } else {
+        alert('인증되었습니다.');
+        firstInputGroup.style.display = 'none';
+        secondInputGroup.style.display = 'inline';
+      }
 
     });
 
 
 
 
+    const passwd = document.querySelector('[name=passwd]');
+    const passwd2 = document.querySelector('[name=passwd2]');
+    const summonerName = document.querySelector('[name=summonerName]');
+    const tagLine = document.querySelector('[name=tagLine]');
+    const sNameSearch = document.querySelector('#sNameSearch');
+    const editBtn = document.querySelector('#editBtn'); // 이메일 수정 버튼
+    const passwdMsg = document.querySelector('#passwdMsg');
+    const passwdMsg2 = document.querySelector('#passwdMsg2');
+    const summonerInfo = document.querySelector('#summonerInfo');
+
+    editBtn.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      passwd.value = null;
+      passwd2.value = null;
+      summonerName.value = null;
+      secondInputGroup.style.display = 'none';
+      confirmKeyInput.value = null;
+      confirmKeyBox.style.display = 'none';
+      exMailMsg.innerText = '';
+      firstInputGroup.style.display = 'inline';
+      memberId.readOnly = false;
+    });
+
+    passwd.addEventListener('input', function (e) {
+      // console.log('인풋태그 바뀔때마다 기록 ');
+      if (!isPassword(passwd.value) || passwd.value === ''.trim()) {
+        passwdMsg.innerText = '비밀번호는 8자리 이상 15미만, 영문, 숫자, 특수기호가 포합되어야 합니다.';
+        passwdMsg.style.color = 'red';
+
+      } else if (isPassword(passwd.value)) {
+        passwdMsg.innerText = '사용할 수 있는 비밀번호 입니다.';
+        passwdMsg.style.color = 'blue';
+      }
+
+    });
+
+    passwd2.addEventListener('input', function (e) {
+
+      if (passwd2.value === ''.trim() || passwd2.value !== passwd.value) {
+        passwdMsg2.innerText = '비밀번호가 일치하지 않습니다.';
+        passwdMsg2.style.color = 'red';
+
+      } else {
+        passwdMsg2.innerText = '비밀번호가 일치합니다';
+        passwdMsg2.style.color = 'blue';
+      }
+
+    });
+
+    sNameSearch.addEventListener('click', function (e) {
+
+      if (summonerName.value === ''.trim()) {
+        alert('소환사 닉네임을 입력하세요');
+        e.stopPropagation();
+        e.preventDefault();
+      } else if (tagLine.value === ''.trim()) {
+        alert('태그네임을 입력해 주세요.');
+        e.preventDefault();
+        e.stopPropagation();
+      } else {
+
+        const gameName = summonerName.value;
+        const tagName = tagLine.value;
+        console.log(gameName + '#' + tagName)
+        getPuuidByTagLine(summonerName.value,tagLine.value).then(response => {
+          // console.log(response);
+          getIdByPuuid(response.puuid).then(response2 => {
+            // console.log(response2);
+            getRankInfoById(response2.id).then(response3 => {
+              // console.log(response3);
+              let info = response3[0];
+              summonerInfo.innerHTML =
+                      `<span>${info.summonerName}#${response.tagLine}</span>
+                       <span>Rank : ${info.tier}${info.rank}${info.leaguePoints}</span>`
+
+            });
+          });
+        });
+      }
+
+    });
 
 
 
+
+    document.addEventListener('keydown', function(event) {
+      if ((event.keyCode || event.which) === 13) {
+        event.preventDefault();
+      }
+    }, true);
 
 
 
@@ -187,6 +316,7 @@
     const signUpBtn = document.querySelector('#signUpBtn');
     const open = document.querySelector('.fa-door-open');
     const closed = document.querySelector('.fa-door-closed');
+    const signUpForm = document.querySelector('[name=signUpForm]');
 
     signUpBtn.addEventListener('mouseover', function () {
       closed.style.display = 'none';
@@ -199,6 +329,40 @@
     });
 
 
+    signUpBtn.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      if (memberId.value === ''.trim() || !exEmail(memberId.value)) {
+        alert('이메일을 확인해 주세요.');
+        e.preventDefault();
+        e.stopPropagation();
+
+      } else if (confirmKeyInput.value === ''.trim() || !matchConfirmKey(confirmKeyInput.value)) {
+        alert('인증 코드를 확인해주세요');
+        e.preventDefault();
+        e.stopPropagation();
+
+      } else if (passwd.value === ''.trim() || passwd.value !== passwd2.value || !isPassword(passwd.value)) {
+        alert('입력한 비밀번호를 확인해 주세요.');
+        e.preventDefault();
+        e.stopPropagation();
+
+      } else if (passwd2.value === ''.trim() || passwd2.value !== passwd.value) {
+        alert('비밀번호 재확인 해주세요.');
+        e.stopPropagation();
+        e.preventDefault();
+
+      } else if (summonerName.value === ''.trim()) {
+        alert('소환사 닉네임을 확인해 주세요.');
+        e.preventDefault();
+        e.stopPropagation();
+      } else {
+        alert('회원가입 되었습니다.');
+        signUpForm.submit();
+      }
+
+    });
 
 
 

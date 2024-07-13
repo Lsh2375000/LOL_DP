@@ -40,6 +40,9 @@ public class MemberEntity extends BaseEntity {
     @Column(name = "summonerName", nullable = false)
     private String summonerName;  // 소환사 닉네임
 
+    @Column(name = "tagLine", updatable = false)
+    private String tagLine; // 소환사 태그네임
+
     @Column(name = "isDel")
     private Boolean isDel;        // 삭제 여부
 
@@ -61,6 +64,7 @@ public class MemberEntity extends BaseEntity {
         memberDTO.setMemberId(this.memberId);
         memberDTO.setPasswd(this.passwd);
         memberDTO.setSummonerName(this.summonerName);
+        memberDTO.setTagLine(this.tagLine);
         memberDTO.setIsDel(this.isDel);
         memberDTO.setRole(this.role);
         memberDTO.setSocial(this.social);

@@ -30,6 +30,7 @@ public class MemberServiceImpl implements MemberService{
         log.info("입력한 회원 정보 : " + memberDTO);
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         memberDTO.setPasswd(passwordEncoder.encode(memberDTO.getPasswd()));
+        memberDTO.setSocial(false);
         // 입력한 비밀번호 암호화
         MemberEntity member = memberDTO.dtoToEntity();
         memberRepository.save(member);

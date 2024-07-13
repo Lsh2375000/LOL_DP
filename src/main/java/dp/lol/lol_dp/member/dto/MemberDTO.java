@@ -23,6 +23,7 @@ public class MemberDTO implements UserDetails, OAuth2User {
     private String memberId;
     private String passwd;
     private String summonerName;
+    private String tagLine;
     private Boolean isDel;
     private String role;
     private Boolean social;
@@ -30,7 +31,7 @@ public class MemberDTO implements UserDetails, OAuth2User {
     private Map<String, Object> props; //  소셜 로그인 정보
     private List<SimpleGrantedAuthority> authorities;
 
-    public MemberDTO(Long memberNo, String memberId, String passwd, String summonerName, Boolean isDel,
+    public MemberDTO(Long memberNo, String memberId, String passwd, String summonerName, String tagLine, Boolean isDel,
                      String role, Boolean social, List<SimpleGrantedAuthority> authorities) {
         // 로그인시 DB에서 회원 정보 가져와서 세션에 값 넣어주기위한 메소드
         log.info("로그인 정보 가져오기");
@@ -38,6 +39,7 @@ public class MemberDTO implements UserDetails, OAuth2User {
         this.memberId = memberId;
         this.passwd = passwd;
         this.summonerName = summonerName;
+        this.tagLine = tagLine;
         this.isDel = isDel;
         this.role = role;
         this.social = social;
@@ -51,13 +53,13 @@ public class MemberDTO implements UserDetails, OAuth2User {
                 .memberId(this.memberId)
                 .passwd(this.passwd)
                 .summonerName(this.summonerName)
+                .tagLine(this.tagLine)
                 .isDel(false)
                 .role(this.role)
                 .social(this.social)
                 .build();
         return member;
     }
-
 
 
     @Override // 비밀번호 담기
@@ -89,7 +91,6 @@ public class MemberDTO implements UserDetails, OAuth2User {
     public boolean isEnabled() {
         return true;
     }
-
 
     @Override
     public Map<String, Object> getAttributes() {

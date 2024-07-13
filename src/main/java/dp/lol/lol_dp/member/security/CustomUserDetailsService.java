@@ -45,6 +45,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                 resultMember.getMemberId(),
                 resultMember.getPasswd(),
                 resultMember.getSummonerName(),
+                resultMember.getTagLine(),
                 resultMember.getIsDel(),
                 resultMember.getRole(),
                 resultMember.getSocial(),

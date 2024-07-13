@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/member")
 @Log4j2
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*", methods = RequestMethod.GET)
 public class MemberValidationController {
     private final MemberService memberService;
     private final MailSenderService mailSenderService;

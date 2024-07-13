@@ -114,6 +114,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                     .memberId(email)
                     .passwd(passwordEncoder.encode("1111"))
                     .summonerName("")
+                    .tagLine("")
                     .role("USER")
                     .isDel(false)
                     .social(true)
@@ -127,6 +128,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                     member.getMemberId(),
                     member.getPasswd(),
                     member.getSummonerName(),
+                    member.getTagLine(),
                     member.getIsDel(),
                     member.getRole(),
                     member.getSocial(),
@@ -144,6 +146,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                     member.getMemberId(),
                     member.getPasswd(),
                     member.getSummonerName(),
+                    member.getTagLine(),
                     member.getIsDel(),
                     member.getRole(),
                     member.getSocial(),
